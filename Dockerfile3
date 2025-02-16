@@ -1,0 +1,14 @@
+FROM eclipse-temurin:21.0.6_7-jdk-alpine-3.21 as BUILDER
+
+WORKDIR /app
+COPY . ./
+RUN ./mvnw -B -e clean compile package -DskipTests
+
+
+FROM eclipse-temurin:21.0.6_7-jdk-alpine-3.21
+
+COPY --from=BUILDER /app/target/*.jar /app/app.jar
+
+EXPOSE 9001
+
+CMD ["java", "-jar", "/app/app.jar"]
