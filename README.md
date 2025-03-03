@@ -1,0 +1,1 @@
+`grype localhost/bshop:latest --fail-on medium`
